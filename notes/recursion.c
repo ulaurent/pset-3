@@ -13,3 +13,15 @@ int collatz (int n){
         return 1 + collatz(3*n+1);
     }
 }
+
+// Another example
+
+int fact(int n){
+    if (n == 1){
+        return 1;
+    }
+    
+    else {
+        return n*fact(n-1);
+    }
+}
