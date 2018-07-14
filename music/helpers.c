@@ -19,5 +19,11 @@ int frequency(string note)
 // Determines whether a string represents a rest
 bool is_rest(string s)
 {
+    if (strlen(s) == 0){
+        return true;
+    }
+    else {
+        return false;
+    }
     // TODO
 }
