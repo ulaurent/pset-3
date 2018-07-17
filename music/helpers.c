@@ -20,134 +20,91 @@
     int frequency(string note)
     {
         int hertz;
-        int octave;
-        int place;
-        int section;
-        char letter;
-        char accidental;
+        int octave = 0;
+        int steps = 0;
+        char letter = note[0];
 
-            //First step find out what Octave you are in
-            // If its A4 auto return hertz equal to 440
-            if(note[0]=='A' && note[1]== '4'){
-                hertz = 440;
-                return hertz;
+
+            //First step find out what octave
+        if(strlen(note) == 3){
+          if(((int)(note[2]-'0')) > 4){
+            octave = 440 *(((int)(note[2]-'0')-4)*2);
+            return octave;
+          }
+          else if (((int)(note[2]-'0')) < 4 && ((int)(note[2]-'0')) >= 1){
+            octave = 440*(4 - ((int)(note[2]-'0')) );
+            return octave;
+          }
+          else if (((int)(note[2]-'0')) == 4){
+            octave = 440;
+            return octave;
+          }
+        }
+        else if (strlen(note) < 3){
+          if(((int)(note[1]-'0')) > 4){
+            octave = 440 *(((int)(note[1]-'0')-4)*2);
+            return octave;
+          }
+          else if (((int)(note[1]-'0')) < 4 && ((int)(note[1]-'0')) >= 1){
+            octave = 440*(4 - ((int)(note[1]-'0')) );
+            return octave;
+          }
+          else if (((int)(note[1]-'0')) == 4){
+            octave = 440;
+            return octave;
+          }
+        }
+
+
+
+          //octave has been found, it can be either from A1 through A8 or more, just know you are at A
+
+          // Now you have to Figure out what Letter the user inputted, in order to know how many steps you want to move from A
+          if (letter == 'A'){
+            return octave;
+          }
+          if (letter == 'B'){
+            steps += 2;
+            return steps;
+          }
+          if (letter == 'G'){
+            steps -= 2;
+            return steps;
+          }
+          if (letter == 'F'){
+            steps -= 4;
+            return steps;
+          }
+          if (letter == 'E'){
+            steps -= 5;
+            return steps;
+          }
+          if (letter == 'D'){
+            steps -= 7;
+            return steps;
+          }
+          if (letter == 'C'){
+            steps -= 9;
+            return steps;
+          }
+          /// The steps from A to the letter requested has been figured out, Depending on the letter requested
+          /// Now determine whether it is a flat or sharp
+
+          if(strlen(note) == 3){
+            if(note[1]== '#'){
+              steps += 1;
+              return steps;
             }
-            
-            else{
-                if(strlen(note) == 2){
-                    letter = note[0];
-                    octave = (int)note[1];
-                    place = 440 *((octave - 4) * 2);
-
-                    if (note[0] == 'B'){
-                        hertz = place*(2^(2/12));
-                    }
-                    if (note[0] == 'G'){
-                        hertz = place/(2^(2/12));
-                    }
-                    if (note[0] == 'F'){
-                        hertz = place/(2^(4/12));
-                    }
-                    if (note[0] == 'E'){
-                        hertz = place/(2^(5/12));
-                    }
-                    if (note[0] == 'D'){
-                        hertz = place/(2^(7/12));
-                    }
-                    if (note[0] == 'C'){
-                        hertz = place/(2^(9/12));
-                    }
-                }
-                //Parameters if string consist of accidentals
-                else {
-                    letter = note[0];
-                    accidental = note[1];
-                    octave = (int)note[2];
-                    place = 440 *((octave - 4) * 2);
-
-                    if (letter == 'B'){
-                        section = place*(2^(2/12));
-
-                        if(accidental == '#'){
-                            hertz = section * (2^(2/12));
-                            return hertz;
-                        }
-                        else{
-                        // accidental is a flat 'b'
-                            hertz = section /(2^(1/12));
-                            return hertz;
-                        }
-                    }
-
-                    if (note[0] == 'G'){
-                        section = place/(2^(2/12));
-
-                        if(accidental == '#'){
-                            hertz = section * (2^(2/12));
-                            return hertz;
-                        }
-                        else{
-                        // accidental is a flat 'b'
-                            hertz = section /(2^(1/12));
-                            return hertz;
-                        }
-                    }
-                    if (note[0] == 'F'){
-                        section = place/(2^(4/12));
-
-                        if(accidental == '#'){
-                            hertz = section * (2^(2/12));
-                            return hertz;
-                        }
-                        else{
-                        // accidental is a flat 'b'
-                            hertz = section /(2^(1/12));
-                            return hertz;
-                        }
-                    }
-                    if (note[0] == 'E'){
-                        section = place/(2^(5/12));
-                        if(accidental == '#'){
-                            hertz = section * (2^(2/12));
-                            return hertz;
-                        }
-                        else{
-                        // accidental is a flat 'b'
-                            hertz = section /(2^(1/12));
-                            return hertz;
-                        }
-                    }
-                    if (note[0] == 'D'){
-                        section = place/(2^(7/12));
-                        if(accidental == '#'){
-                            hertz = section * (2^(2/12));
-                            return hertz;
-                        }
-                        else{
-                        // accidental is a flat 'b'
-                            hertz = section /(2^(1/12));
-                            return hertz;
-                        }
-                    }
-                    if (note[0] == 'C'){
-                        section = place/(2^(9/12));
-
-                        if(accidental == '#'){
-                            hertz = section * (2^(2/12));
-                            return hertz;
-                        }
-                        else{
-                        // accidental is a flat 'b'
-                            hertz = section /(2^(1/12));
-                            return hertz;
-                        }
-                    }
-
-
-                }
+            else if (note[1] == 'b'){
+              steps -= 1;
+              return steps;
             }
+          }
+
+          hertz = octave * 2^(steps/12);
+          return hertz;
     }
-    
+
 
 
 // Determines whether a string represents a rest
