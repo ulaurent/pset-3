@@ -24,38 +24,30 @@
         double octave = 0.0;
         double steps = 0.0;
         char letter = note[0];
+        char select = '\0';
 
 
-            //First step find out what octave
-        if(strlen(note) == 3){
-          if(((int)(note[2]-'0')) > 4){
-            octave = 440.0 *(((int)(note[2]-'0')-4.0)*2);
-            //return octave;
-          }
-          else if (((int)(note[2]-'0')) < 4 && ((int)(note[2]-'0')) >= 1){
-            octave = 440.0*(4 - ((int)(note[2]-'0')) );
-            //return octave;
-          }
-          else if (((int)(note[2]-'0')) == 4){
-            octave = 440.0;
-            //return octave;
-          }
+        //First step find whether it has an accidental
+        if (strlen(note) == 3){
+            select = note[2];
         }
-        else if (strlen(note) < 3){
-          if(((int)(note[1]-'0')) > 4){
-            octave = 440.0 *(((int)(note[1]-'0')-4)*2);
-            //return octave;
-          }
-          else if (((int)(note[1]-'0')) < 4 && ((int)(note[1]-'0')) >= 1){
-            octave = 440.0*(4 - ((int)(note[1]-'0')) );
-            //return octave;
-          }
-          else if (((int)(note[1]-'0')) == 4){
-            octave = 440.0;
-            //return octave;
-          }
+        else if(strlen(note) < 3){
+            select = note[1];
         }
 
+
+        if(((int)(select-'0')) > 4){
+            octave = 440.0 *(((int)(select -'0')-4.0)*2);
+            //return octave;
+        }
+        else if (((int)(select -'0')) < 4 && ((int)(select -'0')) >= 1){
+            octave = 440.0*(4 - ((int)(select -'0')) );
+            //return octave;
+        }
+        else if (((int)(select -'0')) == 4){
+            octave = 440.0;
+            //return octave;
+        }
 
 
           //octave has been found, it can be either from A1 through A8 or more, just know you are at A
@@ -105,8 +97,8 @@
         double form = 2.0;
         double expon = pow(form, stepsfixed);
 
-          hertz = octave * expon;
-          return hertz;
+        hertz = octave * expon;
+        return hertz;
     }
 
 
